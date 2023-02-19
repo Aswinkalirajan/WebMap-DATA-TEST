@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/GHIYearly_0.js"></script>
+        <script src="data/ElectricityTransmissionLines_1.js"></script>
+        <script src="data/MajorPowerStations_2.js"></script>
+        <script src="data/MajorSubstations_3.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-46.58358248162275,107.74484936438404],[-10.519873334422833,163.14951728139374]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_GHIYearly_0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">DN</th>\
+                        <td>' + (feature.properties['DN'] !== null ? autolinker.link(feature.properties['DN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GHIY</th>\
+                        <td>' + (feature.properties['GHIY'] !== null ? autolinker.link(feature.properties['GHIY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GHIYearly_0_0() {
+            return {
+                pane: 'pane_GHIYearly_0',
+                opacity: 1,
+                color: 'rgba(228,26,28,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GHIYearly_0');
+        map.getPane('pane_GHIYearly_0').style.zIndex = 400;
+        map.getPane('pane_GHIYearly_0').style['mix-blend-mode'] = 'normal';
+        var layer_GHIYearly_0 = new L.geoJson(json_GHIYearly_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GHIYearly_0',
+            layerName: 'layer_GHIYearly_0',
+            pane: 'pane_GHIYearly_0',
+            onEachFeature: pop_GHIYearly_0,
+            style: style_GHIYearly_0_0,
+        });
+        bounds_group.addLayer(layer_GHIYearly_0);
+        map.addLayer(layer_GHIYearly_0);
+        function pop_ElectricityTransmissionLines_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NAME</th>\
+                        <td>' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ElectricityTransmissionLines_1_0() {
+            return {
+                pane: 'pane_ElectricityTransmissionLines_1',
+                opacity: 1,
+                color: 'rgba(92,38,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_ElectricityTransmissionLines_1');
+        map.getPane('pane_ElectricityTransmissionLines_1').style.zIndex = 401;
+        map.getPane('pane_ElectricityTransmissionLines_1').style['mix-blend-mode'] = 'normal';
+        var layer_ElectricityTransmissionLines_1 = new L.geoJson(json_ElectricityTransmissionLines_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ElectricityTransmissionLines_1',
+            layerName: 'layer_ElectricityTransmissionLines_1',
+            pane: 'pane_ElectricityTransmissionLines_1',
+            onEachFeature: pop_ElectricityTransmissionLines_1,
+            style: style_ElectricityTransmissionLines_1_0,
+        });
+        bounds_group.addLayer(layer_ElectricityTransmissionLines_1);
+        map.addLayer(layer_ElectricityTransmissionLines_1);
+        function pop_MajorPowerStations_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Name</th>\
+                        <td>' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">descriptio</th>\
+                        <td>' + (feature.properties['descriptio'] !== null ? autolinker.link(feature.properties['descriptio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Class</th>\
+                        <td>' + (feature.properties['Class'] !== null ? autolinker.link(feature.properties['Class'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_MajorPowerStations_2_0(feature) {
+            switch(String(feature.properties['Class'])) {
+                case 'Biomass':
+                    return {
+                pane: 'pane_MajorPowerStations_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(112,202,77,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Hydro':
+                    return {
+                pane: 'pane_MajorPowerStations_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(85,67,215,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'solar':
+                    return {
+                pane: 'pane_MajorPowerStations_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(92,214,204,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'wind':
+                    return {
+                pane: 'pane_MajorPowerStations_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(236,159,76,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_MajorPowerStations_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(200,111,172,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_MajorPowerStations_2');
+        map.getPane('pane_MajorPowerStations_2').style.zIndex = 402;
+        map.getPane('pane_MajorPowerStations_2').style['mix-blend-mode'] = 'normal';
+        var layer_MajorPowerStations_2 = new L.geoJson(json_MajorPowerStations_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_MajorPowerStations_2',
+            layerName: 'layer_MajorPowerStations_2',
+            pane: 'pane_MajorPowerStations_2',
+            onEachFeature: pop_MajorPowerStations_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_MajorPowerStations_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_MajorPowerStations_2);
+        map.addLayer(layer_MajorPowerStations_2);
+        function pop_MajorSubstations_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">DESCRIPTIO</th>\
+                        <td>' + (feature.properties['DESCRIPTIO'] !== null ? autolinker.link(feature.properties['DESCRIPTIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CLASS</th>\
+                        <td>' + (feature.properties['CLASS'] !== null ? autolinker.link(feature.properties['CLASS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NAME</th>\
+                        <td>' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">OPERATIONA</th>\
+                        <td>' + (feature.properties['OPERATIONA'] !== null ? autolinker.link(feature.properties['OPERATIONA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">VOLTAGE</th>\
+                        <td>' + (feature.properties['VOLTAGE'] !== null ? autolinker.link(feature.properties['VOLTAGE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SUBURB</th>\
+                        <td>' + (feature.properties['SUBURB'] !== null ? autolinker.link(feature.properties['SUBURB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">STATE</th>\
+                        <td>' + (feature.properties['STATE'] !== null ? autolinker.link(feature.properties['STATE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SPATIALCON</th>\
+                        <td>' + (feature.properties['SPATIALCON'] !== null ? autolinker.link(feature.properties['SPATIALCON'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">REVISED</th>\
+                        <td>' + (feature.properties['REVISED'] !== null ? autolinker.link(feature.properties['REVISED'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">COMMENT</th>\
+                        <td>' + (feature.properties['COMMENT'] !== null ? autolinker.link(feature.properties['COMMENT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LATITUDE</th>\
+                        <td>' + (feature.properties['LATITUDE'] !== null ? autolinker.link(feature.properties['LATITUDE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LONGITUDE</th>\
+                        <td>' + (feature.properties['LONGITUDE'] !== null ? autolinker.link(feature.properties['LONGITUDE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_MajorSubstations_3_0(feature) {
+            switch(String(feature.properties['CLASS'])) {
+                case 'Bulk Supply Point':
+                    return {
+                pane: 'pane_MajorSubstations_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(142,139,230,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Sole Use':
+                    return {
+                pane: 'pane_MajorSubstations_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(212,17,141,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Substation':
+                    return {
+                pane: 'pane_MajorSubstations_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(97,189,239,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Subtransmission':
+                    return {
+                pane: 'pane_MajorSubstations_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(203,75,71,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Switchyard':
+                    return {
+                pane: 'pane_MajorSubstations_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(13,225,17,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Terminal':
+                    return {
+                pane: 'pane_MajorSubstations_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(116,207,178,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Transmission':
+                    return {
+                pane: 'pane_MajorSubstations_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(171,234,54,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Zone':
+                    return {
+                pane: 'pane_MajorSubstations_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,180,60,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_MajorSubstations_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(156,30,210,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_MajorSubstations_3');
+        map.getPane('pane_MajorSubstations_3').style.zIndex = 403;
+        map.getPane('pane_MajorSubstations_3').style['mix-blend-mode'] = 'normal';
+        var layer_MajorSubstations_3 = new L.geoJson(json_MajorSubstations_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_MajorSubstations_3',
+            layerName: 'layer_MajorSubstations_3',
+            pane: 'pane_MajorSubstations_3',
+            onEachFeature: pop_MajorSubstations_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_MajorSubstations_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_MajorSubstations_3);
+        map.addLayer(layer_MajorSubstations_3);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'MajorSubstations<br /><table><tr><td style="text-align: center;"><img src="legend/MajorSubstations_3_BulkSupplyPoint0.png" /></td><td>Bulk Supply Point</td></tr><tr><td style="text-align: center;"><img src="legend/MajorSubstations_3_SoleUse1.png" /></td><td>Sole Use</td></tr><tr><td style="text-align: center;"><img src="legend/MajorSubstations_3_Substation2.png" /></td><td>Substation</td></tr><tr><td style="text-align: center;"><img src="legend/MajorSubstations_3_Subtransmission3.png" /></td><td>Subtransmission</td></tr><tr><td style="text-align: center;"><img src="legend/MajorSubstations_3_Switchyard4.png" /></td><td>Switchyard</td></tr><tr><td style="text-align: center;"><img src="legend/MajorSubstations_3_Terminal5.png" /></td><td>Terminal</td></tr><tr><td style="text-align: center;"><img src="legend/MajorSubstations_3_Transmission6.png" /></td><td>Transmission</td></tr><tr><td style="text-align: center;"><img src="legend/MajorSubstations_3_Zone7.png" /></td><td>Zone</td></tr><tr><td style="text-align: center;"><img src="legend/MajorSubstations_3_8.png" /></td><td></td></tr></table>': layer_MajorSubstations_3,'MajorPowerStations<br /><table><tr><td style="text-align: center;"><img src="legend/MajorPowerStations_2_Biomass0.png" /></td><td>Biomass</td></tr><tr><td style="text-align: center;"><img src="legend/MajorPowerStations_2_Hydro1.png" /></td><td>Hydro</td></tr><tr><td style="text-align: center;"><img src="legend/MajorPowerStations_2_solar2.png" /></td><td>solar</td></tr><tr><td style="text-align: center;"><img src="legend/MajorPowerStations_2_wind3.png" /></td><td>wind</td></tr><tr><td style="text-align: center;"><img src="legend/MajorPowerStations_2_4.png" /></td><td></td></tr></table>': layer_MajorPowerStations_2,'<img src="legend/ElectricityTransmissionLines_1.png" /> ElectricityTransmissionLines': layer_ElectricityTransmissionLines_1,'<img src="legend/GHIYearly_0.png" /> GHIYearly': layer_GHIYearly_0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
